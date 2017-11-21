@@ -18,14 +18,9 @@ const makeDomo = (req, res) => {
     return res.status(400).json({ error: 'RAWR! Both name and age are required.' });
   }
 
-  if (req.body.level && req.body.level > 99) {
-    return res.status(400).json({ error: 'RAWR! Level cannot exceed 99!' });
-  }
-
   const domoData = {
     name: req.body.name,
     age: req.body.age,
-    level: req.body.level,
     owner: req.session.account._id,
   };
 
@@ -47,20 +42,5 @@ const makeDomo = (req, res) => {
   return domoPromise;
 };
 
-const getDomos = (request, response) => {
-  const req = request;
-  const res = response;
-
-  return Domo.DomoModel.findByOwner(req.session.account._id, (err, docs) => {
-    if (err) {
-      console.log(err);
-      return res.status(400).json({ error: 'an error occurred' });
-    }
-
-    return res.json({ domos: docs });
-  });
-};
-
 module.exports.makerPage = makerPage;
-module.exports.getDomos = getDomos;
 module.exports.make = makeDomo;
