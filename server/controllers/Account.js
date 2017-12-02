@@ -19,7 +19,7 @@ const login = (request, response) => {
   const password = `${req.body.pass}`;
 
   if (!username || !password) {
-    return res.status(400).json({ error: 'RAWR! All field are required!' });
+    return res.status(400).json({ error: 'Hey, you need a username and password' });
   }
 
   return Account.AccountModel.authenticate(username, password, (err, account) => {
@@ -29,7 +29,7 @@ const login = (request, response) => {
 
     req.session.account = Account.AccountModel.toAPI(account);
 
-    return res.json({ redirect: '/maker' });
+    return res.json({ redirect: '/profile' });
   });
 };
 
@@ -62,7 +62,7 @@ const signup = (request, response) => {
 
     savePromise.then(() => {
       req.session.account = Account.AccountModel.toAPI(newAccount);
-      res.json({ redirect: '/maker' });
+      res.json({ redirect: '/profile' });
     });
 
     savePromise.catch((err) => {
@@ -77,6 +77,41 @@ const signup = (request, response) => {
   });
 };
 
+const getBlurb = (request, response) => {
+  const req = request;
+  const res = response;
+  
+  console.log("getblurb");
+
+
+  if (req.body.searchUsername === '') {
+    return Account.AccountModel.findByUsername(req.body.searchUsername, (err, docs) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).json({ error: 'an error occurred' });
+      }
+      
+      console.log(docs);
+
+      return res.json({ blurb: docs });
+    });
+  }
+  return Account.AccountModel.findByUsername(req.session.account.username, (err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'an error occurred' });
+    }
+
+    console.log(docs);
+
+    return res.json({ blurb: docs });
+  });
+};
+
+const setBlurb = (request, response) => {
+  return;
+}
+
 const getToken = (request, response) => {
   const req = request;
   const res = response;
@@ -88,8 +123,20 @@ const getToken = (request, response) => {
   res.json(csrfJSON);
 };
 
+const setPost = (req, res) => {
+  if(!req.body.theBlurb) {
+    return res.status(400).json({error: 'Please input a profile description'});
+  }
+  
+  const blurbData = {
+    contents: req.body.theBlurb,
+  };
+}
+
 module.exports.loginPage = loginPage;
 module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getToken = getToken;
+module.exports.getBlurb = getBlurb;
+module.exports.setBlurb = setBlurb;

@@ -1,27 +1,39 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <title>DomoMaker</title>
+  <title>PostMaker</title>
   <script crossorigin src="https://unpkg.com/react@15/dist/react.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
   <script crossorigin src="https://unpkg.com/prop-types/prop-types.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.6.2/remarkable.min.js"></script>
-  <link rel="shortcut icon" href="/assets/img/favicon.png"/>
   <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
 </head>
 <body>
-  <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
-    <div class="navlink"><a href="/logout">Log out</a></div>
+  <nav>
+    <div class="navlink leftnav"><a id="profileButton" href="/profile">Profile</a></div>
+    <div class="navlink leftnav"><a id="searchButton" href="/search">Find user</a></div>
+    <div class="navlink rightnav"><a href="/logout">Log out</a></div>
+    <div class="navlink rightnav"><a id="pwChangeButton" href="/changePassword">Change Password</a></div>
   </nav>
-  <section id="makeDomo">
+  <section id='ad'>
+    <div class="ad">
+      <h1>Call Now!</h1>
+      <h3>Slots are limited!</h3>
+      <p>Contact me at ian@thenerdpod.com to find out how YOU could have YOUR PRODUCT on THIS WEBSITE!</p>
+    </div>
   </section>
-  <section id="domos">
+  <section id="header">
   </section>
-  <div id="domoMessage"><img id="speech" src="/assets/img/speech.png" alt="speech box"/>
-    <h3><span id="errorMessage"></span></h3><img id="domo" src="assets/img/domo.png" alt="domo"/>
+  <section id="form">
+  </section>
+  <section id="content">
+  </section>
+  <div id="postMessage">
+    <h3><span id="errorMessage"></span></h3>
   </div>
+  <script src="/assets/loginBundle.js"></script>
   <script src="/assets/bundle.js"></script>
 </body>
 </html>
