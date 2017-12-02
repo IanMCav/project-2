@@ -2,7 +2,7 @@ const models = require('../models');
 
 const Post = models.Post;
 
-//router call for displaying all your posts
+// router call for displaying all your posts
 const userPage = (req, res) => {
   Post.PostModel.findByAuthor(req.session.account.username, (err, docs) => {
     if (err) {
@@ -14,7 +14,7 @@ const userPage = (req, res) => {
   });
 };
 
-//router call for making a new post
+// router call for making a new post
 const makePost = (req, res) => {
   if (!req.body.thePost) {
     return res.status(400).json({ error: 'Please input a post.' });
@@ -56,7 +56,7 @@ const makePost = (req, res) => {
   return res.status(400).json({ error: 'A line was too many characters wide!' });
 };
 
-//router call for grabbing all your new posts
+// router call for grabbing all your new posts
 const getPosts = (request, response) => {
   const req = request;
   const res = response;

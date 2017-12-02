@@ -2,18 +2,18 @@ const models = require('../models');
 
 const Account = models.Account;
 
-//router call for logging in
+// router call for logging in
 const loginPage = (req, res) => {
   res.render('login', { csrfToken: req.csrfToken() });
 };
 
-//router call for logging out
+// router call for logging out
 const logout = (req, res) => {
   req.session.destroy();
   res.render('login');
 };
 
-//server-side login
+// server-side login
 const login = (request, response) => {
   const req = request;
   const res = response;
@@ -36,7 +36,7 @@ const login = (request, response) => {
   });
 };
 
-//server-side sign up
+// server-side sign up
 const signup = (request, response) => {
   const req = request;
   const res = response;
@@ -81,18 +81,18 @@ const signup = (request, response) => {
   });
 };
 
-//grab the account's profile blurb
+// grab the account's profile blurb
 const getBlurb = (request, response) => {
   const req = request;
   const res = response;
-  
+
   if (req.body.searchUsername === '') {
     return Account.AccountModel.findByUsername(req.body.searchUsername, (err, docs) => {
       if (err) {
         console.log(err);
         return res.status(400).json({ error: 'an error occurred' });
       }
-      
+
       console.log(docs);
 
       return res.json({ blurb: docs });
@@ -110,12 +110,10 @@ const getBlurb = (request, response) => {
   });
 };
 
-//would update the account's profile blurb
-const setBlurb = (request, response) => {
-  return;
-}
+// would update the account's profile blurb
+const setBlurb = () => false;
 
-//get the csrf token.
+// get the csrf token.
 const getToken = (request, response) => {
   const req = request;
   const res = response;

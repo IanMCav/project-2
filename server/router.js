@@ -1,7 +1,7 @@
 const controllers = require('./controllers');
 const mid = require('./middleware');
 
-//tell the app where to go when gets a request type and a specific url
+// tell the app where to go when gets a request type and a specific url
 const router = (app) => {
   app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);

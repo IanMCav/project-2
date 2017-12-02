@@ -8,8 +8,8 @@ const iterations = 10000;
 const saltLength = 64;
 const keyLength = 64;
 
-//User account.
-//the blurb is a little profile statement
+// User account.
+// the blurb is a little profile statement
 const AccountSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -38,14 +38,14 @@ const AccountSchema = new mongoose.Schema({
   },
 });
 
-//lets us save this to a session in a format the browser understands
+// lets us save this to a session in a format the browser understands
 AccountSchema.statics.toAPI = (doc) => ({
   username: doc.username,
   _id: doc._id,
   blurb: doc.blurb,
 });
 
-//makes sure you log in correctly
+// makes sure you log in correctly
 const validatePassword = (doc, password, callback) => {
   const pass = doc.password;
 
@@ -57,7 +57,7 @@ const validatePassword = (doc, password, callback) => {
   });
 };
 
-//find based on username.
+// find based on username.
 AccountSchema.statics.findByUsername = (name, callback) => {
   const search = {
     username: name,
@@ -74,7 +74,7 @@ AccountSchema.statics.generateHash = (password, callback) => {
   );
 };
 
-//authenticate your username is unique
+// authenticate your username is unique
 AccountSchema.statics.authenticate = (username, password, callback) =>
 AccountModel.findByUsername(username, (err, doc) => {
   if (err) {

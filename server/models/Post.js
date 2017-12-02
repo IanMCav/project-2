@@ -6,7 +6,7 @@ let PostModel = {};
 
 const setVal = (val) => _.escape(val).trim();
 
-//the body of a post: author, contents, and a timestamp for sorting
+// the body of a post: author, contents, and a timestamp for sorting
 const PostSchema = new mongoose.Schema({
   contents: {
     type: String,
@@ -26,13 +26,13 @@ const PostSchema = new mongoose.Schema({
   },
 });
 
-//we don't use it here but allows us to store this in a format JS understands.
+// we don't use it here but allows us to store this in a format JS understands.
 PostSchema.statics.toAPI = (doc) => ({
   contents: doc.name,
   author: doc.author,
 });
 
-//sift through our boundless accounts by author
+// sift through our boundless accounts by author
 PostSchema.statics.findByAuthor = (username, callback) => {
   const search = {
     author: username,
