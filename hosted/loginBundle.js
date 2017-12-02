@@ -1,9 +1,8 @@
 "use strict";
 
+//validate login, log user in, create csrf
 var handleLogin = function handleLogin(e) {
   e.preventDefault();
-
-  $("#postMessage").animate({ width: 'hide' }, 350);
 
   if ($("#user").val() == '' || $("#pass").val() == '') {
     handleError("Username or password is empty");
@@ -17,10 +16,9 @@ var handleLogin = function handleLogin(e) {
   return false;
 };
 
+//validate account creation, log user in, create csrf
 var handleSignup = function handleSignup(e) {
   e.preventDefault();
-
-  $("#postMessage").animate({ width: 'hide' }, 350);
 
   if ($("#user").val() == '' || $("#pass").val() == '' || $("#pass2").val() == '') {
     handleError("All fields are required");
@@ -36,6 +34,7 @@ var handleSignup = function handleSignup(e) {
   return false;
 };
 
+//react component for logging in
 var LoginWindow = function LoginWindow(props) {
   return React.createElement(
     "form",
@@ -62,6 +61,7 @@ var LoginWindow = function LoginWindow(props) {
   );
 };
 
+//react component for creating a new account
 var SignupWindow = function SignupWindow(props) {
   return React.createElement(
     "form",
@@ -95,14 +95,17 @@ var SignupWindow = function SignupWindow(props) {
   );
 };
 
+//switch to login
 var createLoginWindow = function createLoginWindow(csrf) {
   ReactDOM.render(React.createElement(LoginWindow, { csrf: csrf }), document.querySelector("#content"));
 };
 
+//switch to signup
 var createSignupWindow = function createSignupWindow(csrf) {
   ReactDOM.render(React.createElement(SignupWindow, { csrf: csrf }), document.querySelector("#content"));
 };
 
+//initialize button methods, etc
 var setup = function setup(csrf) {
   var loginButton = document.querySelector("#loginButton");
   var signupButton = document.querySelector("#signupButton");
@@ -122,6 +125,7 @@ var setup = function setup(csrf) {
   createLoginWindow(csrf);
 };
 
+//create a csrf token, initialize everything.
 var getToken = function getToken() {
   sendAjax("GET", '/getToken', null, function (result) {
     setup(result.csrfToken);
@@ -133,16 +137,17 @@ $(document).ready(function () {
 });
 "use strict";
 
+//post error when error
 var handleError = function handleError(message) {
   $("#errorMessage").text(message);
-  $("#postMessage").animate({ width: 'toggle' }, 350);
 };
 
+//go to new spot
 var redirect = function redirect(response) {
-  $("#postMessage").animate({ width: 'hide' }, 350);
   window.location = response.redirect;
 };
 
+//make ajax calls
 var sendAjax = function sendAjax(type, action, data, success) {
   $.ajax({
     cache: 'false',

@@ -1,5 +1,6 @@
 "use strict";
 
+//make a new post to the database
 var handlePost = function handlePost(e) {
   e.preventDefault();
 
@@ -15,6 +16,7 @@ var handlePost = function handlePost(e) {
   return false;
 };
 
+//new profile blurb
 var handleBlurb = function handleBlurb(e) {
   e.preventDefault();
 
@@ -25,6 +27,7 @@ var handleBlurb = function handleBlurb(e) {
   return false;
 };
 
+//profile for react
 var Profile = function Profile(props) {
   return React.createElement(
     "form",
@@ -47,6 +50,7 @@ var Profile = function Profile(props) {
   );
 };
 
+//form for react
 var PostForm = function PostForm(props) {
   return React.createElement(
     "form",
@@ -69,6 +73,7 @@ var PostForm = function PostForm(props) {
   );
 };
 
+//all posts for react
 var PostList = function PostList(props) {
   if (props.posts.length === 0) {
     return React.createElement(
@@ -105,18 +110,21 @@ var PostList = function PostList(props) {
   );
 };
 
+//get the posts associated with your account
 var loadPostsFromServer = function loadPostsFromServer() {
   sendAjax("GET", "/getPosts", null, function (data) {
     ReactDOM.render(React.createElement(PostList, { posts: data.posts }), document.querySelector("#content"));
   });
 };
 
+//get your account info- username, blurb. mostly blurb.
 var loadProfileFromServer = function loadProfileFromServer() {
   sendAjax("GET", "/blurb", null, function (data) {
     reactDOM.render(React.createElement(Profile, { csrf: csrf }), document.querySelector("#header"));
   });
 };
 
+//initialize application
 var setup = function setup(csrf) {
   ReactDOM.render(React.createElement(Profile, { csrf: csrf }), document.querySelector("#header"));
 
@@ -127,6 +135,7 @@ var setup = function setup(csrf) {
   loadPostsFromServer();
 };
 
+//prevent csrf. init app.
 var getToken = function getToken() {
   sendAjax("GET", '/getToken', null, function (result) {
     setup(result.csrfToken);
@@ -138,16 +147,17 @@ $(document).ready(function () {
 });
 "use strict";
 
+//post error when error
 var handleError = function handleError(message) {
   $("#errorMessage").text(message);
-  $("#postMessage").animate({ width: 'toggle' }, 350);
 };
 
+//go to new spot
 var redirect = function redirect(response) {
-  $("#postMessage").animate({ width: 'hide' }, 350);
   window.location = response.redirect;
 };
 
+//make ajax calls
 var sendAjax = function sendAjax(type, action, data, success) {
   $.ajax({
     cache: 'false',

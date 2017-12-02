@@ -1,13 +1,14 @@
+//post error when error
 const handleError = (message) => {
   $("#errorMessage").text(message);
-  $("#postMessage").animate({width:'toggle'}, 350);
 };
 
+//go to new spot
 const redirect = (response) => {
-  $("#postMessage").animate({width:'hide'}, 350);
   window.location = response.redirect;
 };
 
+//make ajax calls
 const sendAjax = (type, action, data, success) => {
   $.ajax({
     cache: 'false',

@@ -2,15 +2,18 @@ const models = require('../models');
 
 const Account = models.Account;
 
+//router call for logging in
 const loginPage = (req, res) => {
   res.render('login', { csrfToken: req.csrfToken() });
 };
 
+//router call for logging out
 const logout = (req, res) => {
   req.session.destroy();
   res.render('login');
 };
 
+//server-side login
 const login = (request, response) => {
   const req = request;
   const res = response;
@@ -19,7 +22,7 @@ const login = (request, response) => {
   const password = `${req.body.pass}`;
 
   if (!username || !password) {
-    return res.status(400).json({ error: 'Hey, you need a username and password' });
+    return res.status(400).json({ error: 'Hey, you need to input a username and password' });
   }
 
   return Account.AccountModel.authenticate(username, password, (err, account) => {
@@ -33,6 +36,7 @@ const login = (request, response) => {
   });
 };
 
+//server-side sign up
 const signup = (request, response) => {
   const req = request;
   const res = response;
@@ -77,13 +81,11 @@ const signup = (request, response) => {
   });
 };
 
+//grab the account's profile blurb
 const getBlurb = (request, response) => {
   const req = request;
   const res = response;
   
-  console.log("getblurb");
-
-
   if (req.body.searchUsername === '') {
     return Account.AccountModel.findByUsername(req.body.searchUsername, (err, docs) => {
       if (err) {
@@ -108,10 +110,12 @@ const getBlurb = (request, response) => {
   });
 };
 
+//would update the account's profile blurb
 const setBlurb = (request, response) => {
   return;
 }
 
+//get the csrf token.
 const getToken = (request, response) => {
   const req = request;
   const res = response;
@@ -122,16 +126,6 @@ const getToken = (request, response) => {
 
   res.json(csrfJSON);
 };
-
-const setPost = (req, res) => {
-  if(!req.body.theBlurb) {
-    return res.status(400).json({error: 'Please input a profile description'});
-  }
-  
-  const blurbData = {
-    contents: req.body.theBlurb,
-  };
-}
 
 module.exports.loginPage = loginPage;
 module.exports.login = login;

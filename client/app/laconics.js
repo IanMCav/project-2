@@ -1,3 +1,4 @@
+//make a new post to the database
 const handlePost = (e) => {
   e.preventDefault();
   
@@ -13,6 +14,7 @@ const handlePost = (e) => {
   return false;
 };
 
+//new profile blurb
 const handleBlurb = (e) => {
   e.preventDefault();
   
@@ -23,6 +25,7 @@ const handleBlurb = (e) => {
   return false;
 }
 
+//profile for react
 const Profile = (props) => {
   return(
     <form id="profile"
@@ -40,6 +43,7 @@ const Profile = (props) => {
     </form>)
 };
 
+//form for react
 const PostForm = (props) => {
   return(
     <form id="postForm"
@@ -58,6 +62,7 @@ const PostForm = (props) => {
       );
 };
 
+//all posts for react
 const PostList = (props) => {
   if(props.posts.length === 0) {
     return (
@@ -82,6 +87,7 @@ const PostList = (props) => {
   );
 };
 
+//get the posts associated with your account
 const loadPostsFromServer = () => {
   sendAjax("GET", "/getPosts", null, (data) => {
     ReactDOM.render(
@@ -90,6 +96,7 @@ const loadPostsFromServer = () => {
   });
 };
 
+//get your account info- username, blurb. mostly blurb.
 const loadProfileFromServer = () => {
   sendAjax("GET", "/blurb", null, (data) => {
     reactDOM.render(
@@ -98,6 +105,7 @@ const loadProfileFromServer = () => {
   });
 };
 
+//initialize application
 const setup = function(csrf) {
   ReactDOM.render(
     <Profile csrf={csrf} />, document.querySelector("#header")
@@ -114,6 +122,7 @@ const setup = function(csrf) {
   loadPostsFromServer();
 };
 
+//prevent csrf. init app.
 const getToken = () => {
   sendAjax("GET", '/getToken', null, (result) => {
     setup(result.csrfToken);

@@ -1,7 +1,6 @@
+//validate login, log user in, create csrf
 const handleLogin = (e) => {
   e.preventDefault();
-  
-  $("#postMessage").animate({width:'hide'}, 350);
   
   if($("#user").val() == '' || $("#pass").val() == '') {
     handleError("Username or password is empty");
@@ -15,10 +14,9 @@ const handleLogin = (e) => {
   return false;
 };
 
+//validate account creation, log user in, create csrf
 const handleSignup = (e) => {
   e.preventDefault();
-  
-  $("#postMessage").animate({width:'hide'}, 350);
   
   if($("#user").val() == '' || $("#pass").val() == '' || $("#pass2").val() == '') {
     handleError("All fields are required");
@@ -34,6 +32,7 @@ const handleSignup = (e) => {
   return false;
 };
 
+//react component for logging in
 const LoginWindow = (props) => {
   return (
       <form id="loginForm" name="loginForm"
@@ -53,6 +52,7 @@ const LoginWindow = (props) => {
   );
 };
 
+//react component for creating a new account
 const SignupWindow = (props) => {
   return(
     <form id="signupForm"
@@ -75,18 +75,21 @@ const SignupWindow = (props) => {
       );
 };
 
+//switch to login
 const createLoginWindow = (csrf) => {
   ReactDOM.render(
   <LoginWindow csrf={csrf}/>,
     document.querySelector("#content"));
 };
 
+//switch to signup
 const createSignupWindow = (csrf) => {
   ReactDOM.render(
   <SignupWindow csrf={csrf}/>,
     document.querySelector("#content"));
 };
 
+//initialize button methods, etc
 const setup = (csrf) => {
   const loginButton = document.querySelector("#loginButton");
   const signupButton = document.querySelector("#signupButton");
@@ -106,6 +109,7 @@ const setup = (csrf) => {
   createLoginWindow(csrf);
 };
 
+//create a csrf token, initialize everything.
 const getToken = () => {
   sendAjax("GET", '/getToken', null, (result) => {
     setup(result.csrfToken);
